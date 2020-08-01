@@ -9,7 +9,7 @@ import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
 import javafx.scene.transform.Rotate;
 
-public class Dygestorum extends Group {
+public class FumeHood extends Group {
 
 	static int mainChipboardThick = 25;
 	static int maskChipboardThick = 18;
@@ -21,7 +21,7 @@ public class Dygestorum extends Group {
 	static int szparaNaOkno = 50;
 	
 	
-	public Dygestorum(int width, int height, int depth) {
+	public FumeHood(int width, int height, int depth) {
 
 		Box bok1 = generateChipboard(depth, height);
 		Box bok2 = generateChipboard(depth, height);

@@ -1,6 +1,6 @@
 package main;
 
-import furnitures.dygestorium.Dygestorum;
+import furnitures.dygestorium.FumeHood;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -28,8 +28,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		    
-        Group dygestoriumL = new Dygestorum(2000, 1300, 600);   
-        Group dygestoriumR = new Dygestorum(2000, 1300, 600);         
+        Group dygestoriumL = new FumeHood(2000, 1300, 600);
+        Group dygestoriumR = new FumeHood(2000, 1300, 600);
         
         BorderPane bPane = new BorderPane();
 
