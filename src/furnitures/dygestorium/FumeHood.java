@@ -4,104 +4,80 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
-import javafx.scene.shape.DrawMode;
-import javafx.scene.shape.MeshView;
-import javafx.scene.shape.TriangleMesh;
 import javafx.scene.transform.Rotate;
 
 public class FumeHood extends Group {
 
-	static int mainChipboardThick = 25;
-	static int maskChipboardThick = 18;
-	static int listwaWidth = 150;
-	static int przodHeight = 500;
-	static int przodObnizenie = 150;
-	static int tylObnizenie = 120;
-	static int tylOffset = 110;
-	static int szparaNaOkno = 50;
+	private static final int MAIN_CHIPBOARD_THICK = 25;
+	private static final int MASK_CHIPBOARD_THICK = 18;
+	private static final int BATTEN_WIDTH = 150;
+	private static final int FRONT_HEIGHT = 500;
+	private static final int FRONT_LOWERING = 150;
+	private static final int BACK_LOWERING  = 120;
+	private static final int BACK_OFFSET = 110;
+	private static final int WINDOW_SPACE = 50;
 	
 	
 	public FumeHood(int width, int height, int depth) {
 
-		Box bok1 = generateChipboard(depth, height);
-		Box bok2 = generateChipboard(depth, height);
-		Box tyl = generateChipboard(width - mainChipboardThick*2, height-tylObnizenie);
-		Box frontMask = generateMaskChipboard(width - mainChipboardThick*2, przodHeight);
-		Box przod = generateChipboard(width - mainChipboardThick*2, przodHeight-przodObnizenie);
-		Box listwa1 = generateMaskChipboard(listwaWidth, height);
-		Box listwa2 = generateMaskChipboard(listwaWidth, height);
+		Box side1     = chipboard(depth, height);
+		Box side2     = chipboard(depth, height);
+		Box back      = chipboard(width - MAIN_CHIPBOARD_THICK*2, height-BACK_LOWERING);
+		Box front     = chipboard(width - MAIN_CHIPBOARD_THICK*2, FRONT_HEIGHT-FRONT_LOWERING);
+		Box frontMask = maskChipboard(width - MAIN_CHIPBOARD_THICK*2, FRONT_HEIGHT);
+		Box batten1   = maskChipboard(BATTEN_WIDTH, height);
+		Box batten2   = maskChipboard(BATTEN_WIDTH, height);
+		Window window = new Window(width - MAIN_CHIPBOARD_THICK*2 - 10, height/2);
 
-		bok1.getTransforms().add(new Rotate(90, Rotate.Y_AXIS));
-		bok2.getTransforms().add(new Rotate(90, Rotate.Y_AXIS));
-		bok2.setTranslateX(width-mainChipboardThick);
-		tyl.setTranslateZ((depth - mainChipboardThick)/2d-tylOffset);
-		tyl.setTranslateY(bok1.getTranslateY()-bok1.getHeight()/2d+tyl.getHeight()/2+tylObnizenie);// translateYProperty().bind(bok1.translateYProperty().subtract(frontMask.getHeight()/2d).add(przodObnizenie));
-		tyl.setTranslateX((width - mainChipboardThick)/2d);
-		frontMask.setTranslateZ(-(depth - maskChipboardThick)/2d);
-		frontMask.setTranslateX((width - mainChipboardThick)/2d);
-		frontMask.setTranslateY(-(height - przodHeight) / 2d);
-		przod.translateZProperty().bind(frontMask.translateZProperty().add(przod.getDepth()).add(50));
-		przod.setTranslateX(frontMask.getTranslateX());
-//		przod.translateXProperty().bind(frontMask.translateXProperty());
-		przod.setTranslateY(bok1.getTranslateY()-bok1.getHeight()/2d+przod.getHeight()/2+przodObnizenie);// translateYProperty().bind(bok1.translateYProperty().subtract(frontMask.getHeight()/2d).add(przodObnizenie));
-//		przod.translateYProperty().bind(bok1.translateYProperty().subtract(frontMask.getHeight()/2d).add(przodObnizenie));
-		listwa1.setTranslateZ(-(depth + maskChipboardThick) / 2d);
-		listwa1.setTranslateX((listwaWidth-mainChipboardThick) / 2d);
-		listwa2.setTranslateZ(-(depth + maskChipboardThick) / 2d);
-		listwa2.setTranslateX(-(listwaWidth-mainChipboardThick) / 2d + width - mainChipboardThick);
+		side1.getTransforms().add(new Rotate(90, Rotate.Y_AXIS));
+		side2.getTransforms().add(new Rotate(90, Rotate.Y_AXIS));
+		side1.setTranslateX(0);
+		side2.setTranslateX(width-MAIN_CHIPBOARD_THICK);
+		
+		back.setTranslateX((width - MAIN_CHIPBOARD_THICK)/2d);
+		back.setTranslateY(side1.getTranslateY()-side1.getHeight()/2d+back.getHeight()/2+BACK_LOWERING);
+		back.setTranslateZ((depth - MAIN_CHIPBOARD_THICK)/2d-BACK_OFFSET);
+		
+		frontMask.setTranslateX((width - MAIN_CHIPBOARD_THICK)/2d);
+		frontMask.setTranslateY(-(height - FRONT_HEIGHT) / 2d);
+		frontMask.setTranslateZ(-(depth - MASK_CHIPBOARD_THICK)/2d);
+		
+		front.setTranslateX(frontMask.getTranslateX());
+		front.setTranslateY(side1.getTranslateY()-side1.getHeight()/2d+front.getHeight()/2+FRONT_LOWERING);
+		front.translateZProperty().bind(frontMask.translateZProperty().add(front.getDepth()).add(WINDOW_SPACE));
+		
+		batten1.setTranslateX((BATTEN_WIDTH-MAIN_CHIPBOARD_THICK) / 2d);
+		batten1.setTranslateZ(-(depth + MASK_CHIPBOARD_THICK) / 2d);
+		batten2.setTranslateX(-(BATTEN_WIDTH-MAIN_CHIPBOARD_THICK) / 2d + width - MAIN_CHIPBOARD_THICK);
+		batten2.setTranslateZ(-(depth + MASK_CHIPBOARD_THICK) / 2d);
 
-		Window window = new Window(width - mainChipboardThick*2 - 10, height/2);
-		
+		window.setTranslateX((width-MAIN_CHIPBOARD_THICK)/2d);
+		window.setTranslateZ(-(depth-MAIN_CHIPBOARD_THICK-MAIN_CHIPBOARD_THICK)/2d);
 
-		window.setTranslateX((width-mainChipboardThick)/2d);
-		window.setTranslateZ(-(depth-mainChipboardThick-mainChipboardThick)/2d);
 		
+		getChildren().addAll(side1, side2, back, frontMask, batten1, batten2, window, front);
+		getChildren().forEach(element -> element.setTranslateX(element.getTranslateX()-width/2d));
 		
-		
-		TriangleMesh pir = new TriangleMesh();
-		pir.getPoints().addAll(
-				0, 1000, 1000,
-				1000, 1000, 0,
-				1000, 0, 1000,
-				1000, 1000, 1000,
-				0,0,0);
-		pir.getFaces().addAll(
-				0,1,2,
-				0,1,4,
-				1,2,4,
-				0,2,4);
-		MeshView mesh = new MeshView(pir);
-		mesh.setDrawMode(DrawMode.FILL);
-		mesh.setMaterial(new PhongMaterial(Color.LIGHTGRAY));
-		mesh.setTranslateX(0);
-		mesh.setTranslateY(0);
-		mesh.setTranslateZ(0);
-		
-		getChildren().addAll(bok1, bok2, tyl, frontMask, listwa1, listwa2, window, przod, mesh);// , aLight);
-
-		getChildren().forEach(n -> n.setTranslateX(n.getTranslateX()-width/2d));
 		setScaleX(0.1);
 		setScaleY(0.1);
 		setScaleZ(0.1);
-		
 	}
 
-	private Box generateChipboard(double x, double y) {
+	private Box chipboard(double width, double height) {
 		Box box = new Box();
-		box.setWidth(x);
-		box.setHeight(y);
-		box.setDepth(mainChipboardThick);
+		box.setWidth(width);
+		box.setHeight(height);
+		box.setDepth(MAIN_CHIPBOARD_THICK);
 
 		box.setMaterial(new PhongMaterial(Color.LIGHTGRAY));
 
 		return box;
 	}
 	
-	private Box generateMaskChipboard(double x, double y) {
-		Box box = generateChipboard(x, y);
-		box.setDepth(maskChipboardThick);
+	private Box maskChipboard(double x, double y) {
+		Box box = chipboard(x, y);
+		box.setDepth(MASK_CHIPBOARD_THICK);
 
 		return box;
 	}
-
 }

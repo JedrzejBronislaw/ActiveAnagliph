@@ -28,26 +28,26 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		    
-        Group dygestoriumL = new FumeHood(2000, 1300, 600);
-        Group dygestoriumR = new FumeHood(2000, 1300, 600);
+        Group fumeHoodL = new FumeHood(2000, 1300, 600);
+        Group fumeHoodR = new FumeHood(2000, 1300, 600);
         
         BorderPane bPane = new BorderPane();
 
         ControlPane controls = new ControlPane();
-        reviewR = new FurnitureReview(dygestoriumR, 500, 500);
-        reviewL = new FurnitureReview(dygestoriumL, 500, 500);
+        reviewR = new FurnitureReview(fumeHoodR, 500, 500);
+        reviewL = new FurnitureReview(fumeHoodL, 500, 500);
 
-        controls.setChangeLeftValueEvent((r,g,b) ->  {
+        controls.setOnChangeLeftValue((r,g,b) ->  {
         	reviewL.setFilter(r, g, b);
         	refreshAnaglyph();
         });
-        controls.setChangeRightValueEvent((r,g,b) ->  {
+        controls.setOnChangeRightValue((r,g,b) ->  {
         	reviewR.setFilter(r, g, b);
         	refreshAnaglyph();
         });
         
         ViewHandle viewHandle = new ViewHandle();
-        viewHandle.setRefreshEvent(() -> refreshAnaglyph());
+        viewHandle.setRefreshEvent(this::refreshAnaglyph);
         reviewL.setViewHandle(viewHandle);
         reviewR.setViewHandle(viewHandle);
         
@@ -82,5 +82,4 @@ public class Main extends Application {
 		b.setTopInput(imageInput);
     	iv.setEffect(b);
 	}
-
 }

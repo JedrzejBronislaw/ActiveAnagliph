@@ -20,10 +20,10 @@ public class FurnitureReview extends SubScene {
 
         setCamera(generateCamera());
 
-        setOnMousePressed(e -> viewHandle.MousePressed(e));
-        setOnMouseReleased(e-> viewHandle.MouseReleased(e));
-        setOnMouseDragged(e -> viewHandle.MouseDragged(e));
-        setOnScroll(e -> viewHandle.Scroll(e));
+        setOnMousePressed( e -> viewHandle.MousePressed(e));
+        setOnMouseReleased(e -> viewHandle.MouseReleased(e));
+        setOnMouseDragged( e -> viewHandle.MouseDragged(e));
+        setOnScroll(       e -> viewHandle.Scroll(e));
 	}
 
 	private PerspectiveCamera generateCamera() {
@@ -33,33 +33,19 @@ public class FurnitureReview extends SubScene {
         pCamera.setFarClip(5000);
         pCamera.setFieldOfView(90);
          
-        
         return pCamera;
 	}
 	
 	public void setCameraOffset(double offset) {
 		getCamera().setTranslateX(offset);
 	}
-	
 
 	public void setRedFilter() {
-//		filter.setR(1);
-//		filter.setG(0);
-//		filter.setB(0);
-
-		filter.setR(0.2);
-		filter.setG(0);
-		filter.setB(0);
+		setFilter(1, 0, 0);
 	}
 	
 	public void setCyanFilter() {
-//		filter.setR(0);
-//		filter.setG(1);
-//		filter.setB(1);
-
-		filter.setR(0);
-		filter.setG(0);
-		filter.setB(0.2);
+		setFilter(0, 1, 1);
 	}
 	
 	public void setFilter(double r, double g, double b) {
@@ -67,7 +53,6 @@ public class FurnitureReview extends SubScene {
 		filter.setG(g);
 		filter.setB(b);
 	}
-	
 	
 	public void setViewHandle(ViewHandle viewHandle) {
 		this.viewHandle = viewHandle;

@@ -14,17 +14,19 @@ import javafx.scene.paint.Color;
 import lombok.Setter;
 
 public class ControlPane extends Pane {
-	interface ChangeValueEvent{
-		void changing(double r, double g, double b);
+	
+	interface OnChangeValue {
+		void change(double r, double g, double b);
 	}
 	
-	@Setter private ChangeValueEvent changeLeftValueEvent = null;
-	@Setter private ChangeValueEvent changeRightValueEvent = null;
+	@Setter private OnChangeValue onChangeLeftValue = null;
+	@Setter private OnChangeValue onChangeRightValue = null;
 
-	class SubColorControlPane extends HBox{
-        Slider slider = new Slider(0, 1, 0.01);
-        Label label = new Label("Red");
-        Label labelValue = new Label("X");
+
+	class SubColorControlPane extends HBox {
+        private Slider slider    = new Slider(0, 1, 0.01);
+        private Label label      = new Label("Red");
+        private Label labelValue = new Label("X");
         
         public SubColorControlPane(String labelText) {
         	label.setText(labelText);
@@ -36,23 +38,23 @@ public class ControlPane extends Pane {
 		}
 	}
 	
-	class ColorControlPane extends VBox{
-		SubColorControlPane lRedPane = new SubColorControlPane("Red");
-        SubColorControlPane lGreenPane = new SubColorControlPane("Green");
-        SubColorControlPane lBluePane = new SubColorControlPane("Blue");
+	class ColorControlPane extends VBox {
+		private SubColorControlPane lRedPane   = new SubColorControlPane("Red");
+		private SubColorControlPane lGreenPane = new SubColorControlPane("Green");
+		private SubColorControlPane lBluePane  = new SubColorControlPane("Blue");
         
-        public double getRedValue() {return lRedPane.slider.getValue();};
+        public double getRedValue()   {return lRedPane.slider.getValue();};
         public double getGreenValue() {return lGreenPane.slider.getValue();};
-        public double getBlueValue() {return lBluePane.slider.getValue();};
+        public double getBlueValue()  {return lBluePane.slider.getValue();};
         
         public ColorControlPane() {
         	getChildren().addAll(lRedPane, lGreenPane, lBluePane);
 		}
         
         public void addChangeListener(ChangeListener<Number> listener) {
-            lRedPane.slider.valueProperty().addListener(listener);
+            lRedPane  .slider.valueProperty().addListener(listener);
             lGreenPane.slider.valueProperty().addListener(listener);
-            lBluePane.slider.valueProperty().addListener(listener);
+            lBluePane .slider.valueProperty().addListener(listener);
         }
 	}
 	 
@@ -61,28 +63,25 @@ public class ControlPane extends Pane {
 		super(new Label("controls"));
         setBackground(new Background(new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        
         ColorControlPane lVbox = new ColorControlPane();
         ColorControlPane rVbox = new ColorControlPane();
-        getChildren().add(new HBox(lVbox, rVbox));
 
-        ChangeListener<Number> leftLis = (o, oldVal, newVal) -> {
-        	if (changeLeftValueEvent != null)
-        		changeLeftValueEvent.changing(
+        lVbox.addChangeListener((o, oldVal, newVal) -> {
+        	if (onChangeLeftValue != null)
+        		onChangeLeftValue.change(
         				lVbox.getRedValue(),
         				lVbox.getGreenValue(),
         				lVbox.getBlueValue());
-		};
-        ChangeListener<Number> rightLis = (o, oldVal, newVal) -> {
-        	if (changeRightValueEvent != null)
-        		changeRightValueEvent.changing(
+		});
+        
+        rVbox.addChangeListener((o, oldVal, newVal) -> {
+        	if (onChangeRightValue != null)
+        		onChangeRightValue.change(
         				rVbox.getRedValue(),
         				rVbox.getGreenValue(),
         				rVbox.getBlueValue());
-		};
-        		
-		lVbox.addChangeListener(leftLis);
-		rVbox.addChangeListener(rightLis);
-
+		});
+        
+        getChildren().add(new HBox(lVbox, rVbox));
 	}
 }
