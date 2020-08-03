@@ -1,9 +1,7 @@
 package furnitures.dygestorium;
 
+import furnitures.Chipboard;
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Box;
 import javafx.scene.transform.Rotate;
 
 public class FumeHood extends Group {
@@ -20,36 +18,37 @@ public class FumeHood extends Group {
 	
 	public FumeHood(int width, int height, int depth) {
 
-		Box side1     = chipboard(depth, height);
-		Box side2     = chipboard(depth, height);
-		Box back      = chipboard(width - MAIN_CHIPBOARD_THICK*2, height-BACK_LOWERING);
-		Box front     = chipboard(width - MAIN_CHIPBOARD_THICK*2, FRONT_HEIGHT-FRONT_LOWERING);
-		Box frontMask = maskChipboard(width - MAIN_CHIPBOARD_THICK*2, FRONT_HEIGHT);
-		Box batten1   = maskChipboard(BATTEN_WIDTH, height);
-		Box batten2   = maskChipboard(BATTEN_WIDTH, height);
-		Window window = new Window(width - MAIN_CHIPBOARD_THICK*2 - 10, height/2);
+		Chipboard side1     = chipboard(depth, height);
+		Chipboard side2     = chipboard(depth, height);
+		Chipboard back      = chipboard(width - MAIN_CHIPBOARD_THICK*2, height-BACK_LOWERING);
+		Chipboard front     = chipboard(width - MAIN_CHIPBOARD_THICK*2, FRONT_HEIGHT-FRONT_LOWERING);
+		Chipboard frontMask = maskChipboard(width - MAIN_CHIPBOARD_THICK*2, FRONT_HEIGHT);
+		Chipboard batten1   = maskChipboard(BATTEN_WIDTH, height);
+		Chipboard batten2   = maskChipboard(BATTEN_WIDTH, height);
+		Window window       = new Window(width - MAIN_CHIPBOARD_THICK*2 - 10, height/2);
 
 		side1.getTransforms().add(new Rotate(90, Rotate.Y_AXIS));
 		side2.getTransforms().add(new Rotate(90, Rotate.Y_AXIS));
-		side1.setTranslateX(0);
-		side2.setTranslateX(width-MAIN_CHIPBOARD_THICK);
+		side1.setX(0);
+		side2.setX(width-MAIN_CHIPBOARD_THICK);
 		
-		back.setTranslateX((width - MAIN_CHIPBOARD_THICK)/2d);
-		back.setTranslateY(side1.getTranslateY()-side1.getHeight()/2d+back.getHeight()/2+BACK_LOWERING);
-		back.setTranslateZ((depth - MAIN_CHIPBOARD_THICK)/2d-BACK_OFFSET);
 		
-		frontMask.setTranslateX((width - MAIN_CHIPBOARD_THICK)/2d);
-		frontMask.setTranslateY(-(height - FRONT_HEIGHT) / 2d);
-		frontMask.setTranslateZ(-(depth - MASK_CHIPBOARD_THICK)/2d);
+		back.setX((width - MAIN_CHIPBOARD_THICK)/2d);
+		back.setY(side1.getY()-side1.getHeight()/2d+back.getHeight()/2+BACK_LOWERING);
+		back.setZ((depth - MAIN_CHIPBOARD_THICK)/2d-BACK_OFFSET);
 		
-		front.setTranslateX(frontMask.getTranslateX());
-		front.setTranslateY(side1.getTranslateY()-side1.getHeight()/2d+front.getHeight()/2+FRONT_LOWERING);
+		frontMask.setX((width - MAIN_CHIPBOARD_THICK)/2d);
+		frontMask.setY(-(height - FRONT_HEIGHT) / 2d);
+		frontMask.setZ(-(depth - MASK_CHIPBOARD_THICK)/2d);
+
+		front.setX(frontMask.getX());
+		front.setY(side1.getY()-side1.getHeight()/2d+front.getHeight()/2+FRONT_LOWERING);
 		front.translateZProperty().bind(frontMask.translateZProperty().add(front.getDepth()).add(WINDOW_SPACE));
 		
-		batten1.setTranslateX((BATTEN_WIDTH-MAIN_CHIPBOARD_THICK) / 2d);
-		batten1.setTranslateZ(-(depth + MASK_CHIPBOARD_THICK) / 2d);
-		batten2.setTranslateX(-(BATTEN_WIDTH-MAIN_CHIPBOARD_THICK) / 2d + width - MAIN_CHIPBOARD_THICK);
-		batten2.setTranslateZ(-(depth + MASK_CHIPBOARD_THICK) / 2d);
+		batten1.setX((BATTEN_WIDTH-MAIN_CHIPBOARD_THICK) / 2d);
+		batten1.setZ(-(depth + MASK_CHIPBOARD_THICK) / 2d);
+		batten2.setX(-(BATTEN_WIDTH-MAIN_CHIPBOARD_THICK) / 2d + width - MAIN_CHIPBOARD_THICK);
+		batten2.setZ(-(depth + MASK_CHIPBOARD_THICK) / 2d);
 
 		window.setTranslateX((width-MAIN_CHIPBOARD_THICK)/2d);
 		window.setTranslateZ(-(depth-MAIN_CHIPBOARD_THICK-MAIN_CHIPBOARD_THICK)/2d);
@@ -63,21 +62,11 @@ public class FumeHood extends Group {
 		setScaleZ(0.1);
 	}
 
-	private Box chipboard(double width, double height) {
-		Box box = new Box();
-		box.setWidth(width);
-		box.setHeight(height);
-		box.setDepth(MAIN_CHIPBOARD_THICK);
-
-		box.setMaterial(new PhongMaterial(Color.LIGHTGRAY));
-
-		return box;
+	private Chipboard chipboard(double width, double height) {
+		return new Chipboard(width, height, MAIN_CHIPBOARD_THICK);
 	}
 	
-	private Box maskChipboard(double x, double y) {
-		Box box = chipboard(x, y);
-		box.setDepth(MASK_CHIPBOARD_THICK);
-
-		return box;
+	private Chipboard maskChipboard(double width, double height) {
+		return new Chipboard(width, height, MASK_CHIPBOARD_THICK);
 	}
 }
