@@ -1,8 +1,8 @@
 package furnitures.dygestorium;
 
 import furnitures.Chipboard;
+import furnitures.Position;
 import javafx.scene.Group;
-import javafx.scene.transform.Rotate;
 
 public class FumeHood extends Group {
 
@@ -26,9 +26,9 @@ public class FumeHood extends Group {
 		Chipboard batten1   = maskChipboard(BATTEN_WIDTH, height);
 		Chipboard batten2   = maskChipboard(BATTEN_WIDTH, height);
 		Window window       = new Window(width - MAIN_CHIPBOARD_THICK*2 - 10, height/2);
-
-		side1.getTransforms().add(new Rotate(90, Rotate.Y_AXIS));
-		side2.getTransforms().add(new Rotate(90, Rotate.Y_AXIS));
+		
+		side1.setPosition(Position.SIDE);
+		side2.setPosition(Position.SIDE);
 		side1.setX(0);
 		side2.setX(width-MAIN_CHIPBOARD_THICK);
 		
@@ -43,7 +43,7 @@ public class FumeHood extends Group {
 
 		front.setX(frontMask.getX());
 		front.setY(side1.getY()-side1.getHeight()/2d+front.getHeight()/2+FRONT_LOWERING);
-		front.translateZProperty().bind(frontMask.translateZProperty().add(front.getDepth()).add(WINDOW_SPACE));
+		front.bindZProperty(frontMask.zProperty().add(front.getDepth()).add(WINDOW_SPACE));
 		
 		batten1.setX((BATTEN_WIDTH-MAIN_CHIPBOARD_THICK) / 2d);
 		batten1.setZ(-(depth + MASK_CHIPBOARD_THICK) / 2d);
