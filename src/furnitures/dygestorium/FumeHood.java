@@ -34,7 +34,7 @@ public class FumeHood extends Group {
 		
 		
 		back.setX((width - MAIN_CHIPBOARD_THICK)/2d);
-		back.setY(side1.getY()-side1.getHeight()/2d+back.getHeight()/2+BACK_LOWERING);
+		back.setY(side1.getY() + BACK_LOWERING/2d);
 		back.setZ((depth - MAIN_CHIPBOARD_THICK)/2d-BACK_OFFSET);
 		
 		frontMask.setX((width - MAIN_CHIPBOARD_THICK)/2d);
@@ -47,7 +47,7 @@ public class FumeHood extends Group {
 		
 		batten1.setX((BATTEN_WIDTH-MAIN_CHIPBOARD_THICK) / 2d);
 		batten1.setZ(-(depth + MASK_CHIPBOARD_THICK) / 2d);
-		batten2.setX(-(BATTEN_WIDTH-MAIN_CHIPBOARD_THICK) / 2d + width - MAIN_CHIPBOARD_THICK);
+		batten2.setX(width - BATTEN_WIDTH / 2d - MAIN_CHIPBOARD_THICK / 2d);
 		batten2.setZ(-(depth + MASK_CHIPBOARD_THICK) / 2d);
 
 		window.setTranslateX((width-MAIN_CHIPBOARD_THICK)/2d);
