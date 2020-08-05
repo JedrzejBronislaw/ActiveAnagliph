@@ -30,32 +30,37 @@ public class FumeHood extends Group {
 		side1.setPosition(Position.SIDE);
 		side2.setPosition(Position.SIDE);
 		side1.setX(0);
-		side2.setX(width-MAIN_CHIPBOARD_THICK);
 		
+		back.touchLeft(side1);
+		back.bindBottom(side1);
+		back.bindBack(side1.back().subtract(BACK_OFFSET));
 		
-		back.setX((width - MAIN_CHIPBOARD_THICK)/2d);
-		back.setY(side1.getY() + BACK_LOWERING/2d);
-		back.setZ((depth - MAIN_CHIPBOARD_THICK)/2d-BACK_OFFSET);
+		side2.bindFront(side1);
+		side2.bindBottom(side1);
+		side2.touchLeft(back);
 		
-		frontMask.setX((width - MAIN_CHIPBOARD_THICK)/2d);
-		frontMask.setY(-(height - FRONT_HEIGHT) / 2d);
-		frontMask.setZ(-(depth - MASK_CHIPBOARD_THICK)/2d);
+		frontMask.touchLeft(side1);
+		frontMask.bindTop(side1);
+		frontMask.bindFront(side1);
 
-		front.setX(frontMask.getX());
-		front.setY(side1.getY()-side1.getHeight()/2d+front.getHeight()/2+FRONT_LOWERING);
-		front.bindZProperty(frontMask.zProperty().add(front.getDepth()).add(WINDOW_SPACE));
+		front.bindTop(side1.top().add(FRONT_LOWERING));
+		front.touchLeft(side1);
+		front.bindFront(frontMask.back().add(WINDOW_SPACE));
 		
-		batten1.setX((BATTEN_WIDTH-MAIN_CHIPBOARD_THICK) / 2d);
-		batten1.setZ(-(depth + MASK_CHIPBOARD_THICK) / 2d);
-		batten2.setX(width - BATTEN_WIDTH / 2d - MAIN_CHIPBOARD_THICK / 2d);
-		batten2.setZ(-(depth + MASK_CHIPBOARD_THICK) / 2d);
+		batten1.bindTop(side1);
+		batten1.bindLeft(side1);
+		batten1.touchBack(side1);
 
-		window.setTranslateX((width-MAIN_CHIPBOARD_THICK)/2d);
-		window.setTranslateZ(-(depth-MAIN_CHIPBOARD_THICK-MAIN_CHIPBOARD_THICK)/2d);
+		batten2.bindTop(side2);
+		batten2.bindRight(side2);
+		batten2.touchBack(side2);
+
+		window.translateXProperty().bind(side1.left().add(width/2d));
+		window.translateZProperty().bind(front.front().subtract(WINDOW_SPACE/2));
 
 		
 		getChildren().addAll(side1, side2, back, frontMask, batten1, batten2, window, front);
-		getChildren().forEach(element -> element.setTranslateX(element.getTranslateX()-width/2d));
+		side1.setTranslateX(side1.getTranslateX()-width/2d);
 		
 		setScaleX(0.1);
 		setScaleY(0.1);
