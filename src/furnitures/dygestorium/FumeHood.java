@@ -1,6 +1,7 @@
 package furnitures.dygestorium;
 
 import furnitures.Chipboard;
+import furnitures.ChipboardFactory;
 import furnitures.Position;
 import javafx.scene.Group;
 
@@ -18,13 +19,16 @@ public class FumeHood extends Group {
 	
 	public FumeHood(int width, int height, int depth) {
 
-		Chipboard side1     = chipboard(depth, height);
-		Chipboard side2     = chipboard(depth, height);
-		Chipboard back      = chipboard(width - MAIN_CHIPBOARD_THICK*2, height-BACK_LOWERING);
-		Chipboard front     = chipboard(width - MAIN_CHIPBOARD_THICK*2, FRONT_HEIGHT-FRONT_LOWERING);
-		Chipboard frontMask = maskChipboard(width - MAIN_CHIPBOARD_THICK*2, FRONT_HEIGHT);
-		Chipboard batten1   = maskChipboard(BATTEN_WIDTH, height);
-		Chipboard batten2   = maskChipboard(BATTEN_WIDTH, height);
+		ChipboardFactory chipboardFactory = new ChipboardFactory(MAIN_CHIPBOARD_THICK);
+		ChipboardFactory maskFactory      = new ChipboardFactory(MASK_CHIPBOARD_THICK);
+		
+		Chipboard side1     = chipboardFactory.create(depth, height);
+		Chipboard side2     = chipboardFactory.create(depth, height);
+		Chipboard back      = chipboardFactory.create(width - MAIN_CHIPBOARD_THICK*2, height-BACK_LOWERING);
+		Chipboard front     = chipboardFactory.create(width - MAIN_CHIPBOARD_THICK*2, FRONT_HEIGHT-FRONT_LOWERING);
+		Chipboard frontMask = maskFactory.create(width - MAIN_CHIPBOARD_THICK*2, FRONT_HEIGHT);
+		Chipboard batten1   = maskFactory.create(BATTEN_WIDTH, height);
+		Chipboard batten2   = maskFactory.create(BATTEN_WIDTH, height);
 		Window window       = new Window(width - MAIN_CHIPBOARD_THICK*2 - 10, height/2);
 		
 		side1.setPosition(Position.SIDE);
@@ -65,13 +69,5 @@ public class FumeHood extends Group {
 		setScaleX(0.1);
 		setScaleY(0.1);
 		setScaleZ(0.1);
-	}
-
-	private Chipboard chipboard(double width, double height) {
-		return new Chipboard(width, height, MAIN_CHIPBOARD_THICK);
-	}
-	
-	private Chipboard maskChipboard(double width, double height) {
-		return new Chipboard(width, height, MASK_CHIPBOARD_THICK);
 	}
 }
