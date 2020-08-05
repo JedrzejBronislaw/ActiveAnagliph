@@ -9,8 +9,13 @@ import javafx.scene.shape.Box;
 import javafx.scene.transform.Rotate;
 
 public class Chipboard extends Box {
+	
+	private DoubleBinding halfWidth  = widthProperty() .divide(2);
+	private DoubleBinding halfDepth  = depthProperty() .divide(2);
+	private DoubleBinding halfHeight = heightProperty().divide(2);
 
 	private Position position = Position.FRONT;
+	
 	
 	public Chipboard(double width, double height, double thick) {
 		setWidth(width);
@@ -81,92 +86,126 @@ public class Chipboard extends Box {
 		return translateZProperty();
 	}
 
-	
+
+
+	private DoubleBinding frontBackOffset() {
+		switch (position) {
+			case SIDE: return halfWidth;
+			case FLAT: return halfHeight;
+			default:   return halfDepth;
+		}
+	}
+	private DoubleBinding leftRightOffset() {
+		switch (position) {
+			case SIDE: return halfDepth;
+			case FLAT: return halfWidth;
+			default:   return halfWidth;
+		}
+	}
+	private DoubleBinding topBottomOffset() {
+		switch (position) {
+			case SIDE: return halfHeight;
+			case FLAT: return halfDepth;
+			default:   return halfHeight;
+		}
+	}
 
 	public void bindRight(DoubleBinding property) {
-		translateXProperty().bind(property.subtract(halfWidth));
+		translateXProperty().bind(property.subtract(leftRightOffset()));
 	}
 	
 	public void bindLeft(DoubleBinding property) {
-		translateXProperty().bind(property.add(halfWidth));
+		translateXProperty().bind(property.add(leftRightOffset()));
 	}
 	
 	public void bindFront(DoubleBinding property) {
-		translateZProperty().bind(property.add(halfDepth));
+		translateZProperty().bind(property.add(frontBackOffset()));
 	}
 	
 	public void bindBack(DoubleBinding property) {
-		translateZProperty().bind(property.subtract(halfDepth));
+		translateZProperty().bind(property.subtract(frontBackOffset()));
 	}
 	
 	public void bindTop(DoubleBinding property) {
-		translateYProperty().bind(property.add(halfHeight));
+		translateYProperty().bind(property.add(topBottomOffset()));
 	}
 	
 	public void bindBottom(DoubleBinding property) {
-		translateYProperty().bind(property.subtract(halfHeight));
+		translateYProperty().bind(property.subtract(topBottomOffset()));
+	}
+
+	
+	public void bindRight(Chipboard chipboard) {
+		bindRight(chipboard.right());
 	}
 	
+	public void bindLeft(Chipboard chipboard) {
+		bindLeft(chipboard.left());
+	}
 	
-	private DoubleBinding halfWidth  = widthProperty().divide(2);
-	private DoubleBinding halfDepth  = depthProperty().divide(2);
-	private DoubleBinding halfHeight = heightProperty().divide(2);
+	public void bindFront(Chipboard chipboard) {
+		bindFront(chipboard.front());
+	}
+	
+	public void bindBack(Chipboard chipboard) {
+		bindBack(chipboard.back());
+	}
+	
+	public void bindTop(Chipboard chipboard) {
+		bindTop(chipboard.top());
+	}
+	
+	public void bindBottom(Chipboard chipboard) {
+		bindBottom(chipboard.bottom());
+	}
 
 
 	private DoubleProperty frontBackAxis() {
-		DoubleProperty axis;
-		
 		switch (position) {
-			case SIDE: axis = xProperty(); break;
-			case FLAT: axis = yProperty(); break;
-			default:   axis = zProperty(); break;
+			case SIDE: return xProperty();
+			case FLAT: return yProperty();
+			default:   return zProperty();
 		}
-		return axis;
 	}
 
 	private DoubleProperty leftRightAxis() {
-		DoubleProperty axis;
-		
 		switch (position) {
-			case SIDE: axis = zProperty(); break;
-			case FLAT: axis = xProperty(); break;
-			default:   axis = xProperty(); break;
+			case SIDE: return zProperty();
+			case FLAT: return xProperty();
+			default:   return xProperty();
 		}
-		return axis;
 	}
 
 	private DoubleProperty topBottomAxis() {
-		DoubleProperty axis;
-		
 		switch (position) {
-			case SIDE: axis = yProperty(); break;
-			case FLAT: axis = zProperty(); break;
-			default:   axis = yProperty(); break;
+			case SIDE: return yProperty();
+			case FLAT: return zProperty();
+			default:   return yProperty();
 		}
-		return axis;
 	}
-	
-	public DoubleBinding innerFront() {
+
+
+	private DoubleBinding innerFront() {
 		return frontBackAxis().subtract(halfDepth);
 	}
 
-	public DoubleBinding innerBack() {
+	private DoubleBinding innerBack() {
 		return frontBackAxis().add(halfDepth);
 	}
 	
-	public DoubleBinding innerRight() {
+	private DoubleBinding innerRight() {
 		return leftRightAxis().add(halfWidth);
 	}
 	
-	public DoubleBinding innerLeft() {
+	private DoubleBinding innerLeft() {
 		return leftRightAxis().subtract(halfWidth);
 	}
 	
-	public DoubleBinding innerBottom() {
+	private DoubleBinding innerBottom() {
 		return topBottomAxis().add(halfHeight);
 	}
 	
-	public DoubleBinding innerTop() {
+	private DoubleBinding innerTop() {
 		return topBottomAxis().subtract(halfHeight);
 	}
 
@@ -217,5 +256,24 @@ public class Chipboard extends Box {
 			case SIDE: return innerBottom();
 			default:   return innerBottom();
 		}
+	}
+
+	public void touchTop(Chipboard chipboard) {
+		bindTop(chipboard.bottom());
+	}
+	public void touchBottom(Chipboard chipboard) {
+		bindBottom(chipboard.top());
+	}
+	public void touchRight(Chipboard chipboard) {
+		bindRight(chipboard.left());
+	}
+	public void touchLeft(Chipboard chipboard) {
+		bindLeft(chipboard.right());
+	}
+	public void touchFront(Chipboard chipboard) {
+		bindFront(chipboard.back());
+	}
+	public void touchBack(Chipboard chipboard) {
+		bindBack(chipboard.front());
 	}
 }
