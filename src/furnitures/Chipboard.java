@@ -21,8 +21,10 @@ public class Chipboard extends Box {
 		setWidth(width);
 		setHeight(height);
 		setDepth(thick);
-		
-		setMaterial(new PhongMaterial(Color.LIGHTGRAY));
+	}
+	
+	public void setColor(Color color) {
+		setMaterial(new PhongMaterial(color));
 	}
 
 	public void setX(double x) {

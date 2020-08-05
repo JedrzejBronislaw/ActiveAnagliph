@@ -4,6 +4,7 @@ import furnitures.Chipboard;
 import furnitures.ChipboardFactory;
 import furnitures.Position;
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
 
 public class FumeHood extends Group {
 
@@ -15,12 +16,13 @@ public class FumeHood extends Group {
 	private static final int BACK_LOWERING  = 120;
 	private static final int BACK_OFFSET = 110;
 	private static final int WINDOW_SPACE = 50;
+	private static final Color COLOR = Color.LIGHTGRAY;
 	
 	
 	public FumeHood(int width, int height, int depth) {
 
-		ChipboardFactory chipboardFactory = new ChipboardFactory(MAIN_CHIPBOARD_THICK);
-		ChipboardFactory maskFactory      = new ChipboardFactory(MASK_CHIPBOARD_THICK);
+		ChipboardFactory chipboardFactory = new ChipboardFactory(MAIN_CHIPBOARD_THICK, COLOR);
+		ChipboardFactory maskFactory      = new ChipboardFactory(MASK_CHIPBOARD_THICK, COLOR);
 		
 		Chipboard side1     = chipboardFactory.create(depth, height);
 		Chipboard side2     = chipboardFactory.create(depth, height);
