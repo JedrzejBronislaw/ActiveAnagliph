@@ -5,14 +5,14 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
 
-public class FurnitureReview extends SubScene {
+public class SingleViewer extends SubScene {
 
 	private Filter filter;
 	
 	private ViewHandle viewHandle;
 	private Parent furniture;
 
-	public FurnitureReview(Parent furniture, double width, double height) {
+	public SingleViewer(Parent furniture, double width, double height) {
 		super(furniture, width, height, true, SceneAntialiasing.BALANCED);
 		this.furniture = furniture;
 		filter = new Filter(width, height);

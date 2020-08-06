@@ -16,8 +16,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	FurnitureReview reviewR;
-    FurnitureReview reviewL;
+	SingleViewer reviewR;
+    SingleViewer reviewL;
     ImageView iv;
     final double cameraOffset = 20;
 	
@@ -34,8 +34,8 @@ public class Main extends Application {
         BorderPane bPane = new BorderPane();
 
         ControlPane controls = new ControlPane();
-        reviewR = new FurnitureReview(fumeHoodR, 500, 500);
-        reviewL = new FurnitureReview(fumeHoodL, 500, 500);
+        reviewR = new SingleViewer(fumeHoodR, 500, 500);
+        reviewL = new SingleViewer(fumeHoodL, 500, 500);
 
         controls.setOnChangeLeftValue((r,g,b) ->  {
         	reviewL.setFilter(r, g, b);
