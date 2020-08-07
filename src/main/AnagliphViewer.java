@@ -17,7 +17,7 @@ public class AnagliphViewer {
 	@Getter private final SingleViewer leftView;
 	@Getter private final ImageView anagliph = new ImageView();
 	
-	private final ViewHandle viewHandle = new ViewHandle(this::refreshAnaglyph);
+	private final MouseController mouseController = new MouseController(this::refreshAnaglyph);
 
 
 	public AnagliphViewer(Group fumeHoodL, Group fumeHoodR) {
@@ -29,8 +29,8 @@ public class AnagliphViewer {
 		rightView.setCyanFilter();
 		leftView.setRedFilter();
 		
-		viewHandle.add(fumeHoodR, rightView.getCamera());
-		viewHandle.add(fumeHoodL, leftView .getCamera());
+		mouseController.add(fumeHoodR, rightView.getCamera());
+		mouseController.add(fumeHoodL, leftView .getCamera());
 	}
 	
 	public void setRightFilter(double r, double g, double b) {

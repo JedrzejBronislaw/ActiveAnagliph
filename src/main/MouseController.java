@@ -12,7 +12,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class ViewHandle {
+public class MouseController {
 	
 	interface RefreshEvent {
 		void refreshing();
