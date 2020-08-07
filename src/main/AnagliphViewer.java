@@ -17,20 +17,20 @@ public class AnagliphViewer {
 	@Getter private final SingleViewer leftView;
 	@Getter private final ImageView anagliph = new ImageView();
 	
-	
+	private final ViewHandle viewHandle = new ViewHandle(this::refreshAnaglyph);
+
+
 	public AnagliphViewer(Group fumeHoodL, Group fumeHoodR) {
 		rightView = new SingleViewer(fumeHoodR, 500, 500);
 		leftView  = new SingleViewer(fumeHoodL, 500, 500);
-		
-		ViewHandle viewHandle = new ViewHandle();
-		viewHandle.setRefreshEvent(this::refreshAnaglyph);
-		leftView .setViewHandle(viewHandle);
-		rightView.setViewHandle(viewHandle);
 		
 		rightView.setCameraOffset(CAMERA_OFFSET);
 		
 		rightView.setCyanFilter();
 		leftView.setRedFilter();
+		
+		viewHandle.add(fumeHoodR, rightView.getCamera());
+		viewHandle.add(fumeHoodL, leftView .getCamera());
 	}
 	
 	public void setRightFilter(double r, double g, double b) {
