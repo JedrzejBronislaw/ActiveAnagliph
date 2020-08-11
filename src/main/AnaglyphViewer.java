@@ -13,7 +13,9 @@ import lombok.Getter;
 
 public class AnaglyphViewer {
 	
-	private final static double CAMERA_OFFSET = 20;
+	private final static int CAMERA_OFFSET = 20;
+	private final static int WIDTH  = 500;
+	private final static int HEIGHT = 500;
 	
 	@Getter private final SingleViewer rightView;
 	@Getter private final SingleViewer leftView;
@@ -23,8 +25,8 @@ public class AnaglyphViewer {
 
 
 	public AnaglyphViewer(Group fumeHoodL, Group fumeHoodR) {
-		rightView = new SingleViewer(fumeHoodR, 500, 500);
-		leftView  = new SingleViewer(fumeHoodL, 500, 500);
+		rightView = new SingleViewer(fumeHoodR, WIDTH, HEIGHT);
+		leftView  = new SingleViewer(fumeHoodL, WIDTH, HEIGHT);
 		
 		rightView.setCameraOffset(CAMERA_OFFSET);
 		
@@ -49,15 +51,33 @@ public class AnaglyphViewer {
 	}
 	
 	public void refreshAnaglyph() {
-		WritableImage left  = leftView .snapshot(new SnapshotParameters(), null);
-		WritableImage right = rightView.snapshot(new SnapshotParameters(), null);
+		WritableImage left  = getLeft();
+		WritableImage right = getRight();
 		
 		anaglyph.setImage(left);
 		
 		Blend blend = new Blend(BlendMode.ADD);
-		ImageInput imageInput = new ImageInput(right, CAMERA_OFFSET, 0);
+		ImageInput imageInput = new ImageInput(right, 0, 0);
 		blend.setTopInput(imageInput);
 		
 		anaglyph.setEffect(blend);
+	}
+
+	private WritableImage getLeft() {
+		WritableImage left  = leftView .snapshot(new SnapshotParameters(), null);
+		return cutIntersection(left, CAMERA_OFFSET);
+	}
+
+	private WritableImage getRight() {
+		WritableImage left  = rightView.snapshot(new SnapshotParameters(), null);
+		return cutIntersection(left, 0);
+	}
+
+	private WritableImage cutIntersection(WritableImage image, int startX) {
+		return new WritableImage(image.getPixelReader(),
+				startX,
+				0,
+				WIDTH-CAMERA_OFFSET,
+				HEIGHT);
 	}
 }
