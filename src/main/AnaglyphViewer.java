@@ -2,12 +2,7 @@ package main;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ImageInput;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import lombok.Getter;
 
@@ -20,6 +15,7 @@ public class AnaglyphViewer {
 	@Getter private final SingleViewer rightView;
 	@Getter private final SingleViewer leftView;
 	@Getter private final ImageView anaglyph = new ImageView();
+	        private final AnaglyphMixer mixer;
 	
 	private final MouseController mouseController = new MouseController(this::refreshAnaglyph);
 
@@ -27,6 +23,7 @@ public class AnaglyphViewer {
 	public AnaglyphViewer(Group fumeHoodL, Group fumeHoodR) {
 		rightView = new SingleViewer(fumeHoodR, WIDTH, HEIGHT);
 		leftView  = new SingleViewer(fumeHoodL, WIDTH, HEIGHT);
+		mixer     = new AnaglyphMixer(rightView, leftView, CAMERA_OFFSET);
 		
 		rightView.setCameraOffset(CAMERA_OFFSET);
 		
@@ -51,33 +48,6 @@ public class AnaglyphViewer {
 	}
 	
 	public void refreshAnaglyph() {
-		WritableImage left  = getLeft();
-		WritableImage right = getRight();
-		
-		anaglyph.setImage(left);
-		
-		Blend blend = new Blend(BlendMode.ADD);
-		ImageInput imageInput = new ImageInput(right, 0, 0);
-		blend.setTopInput(imageInput);
-		
-		anaglyph.setEffect(blend);
-	}
-
-	private WritableImage getLeft() {
-		WritableImage left  = leftView .snapshot(new SnapshotParameters(), null);
-		return cutIntersection(left, CAMERA_OFFSET);
-	}
-
-	private WritableImage getRight() {
-		WritableImage left  = rightView.snapshot(new SnapshotParameters(), null);
-		return cutIntersection(left, 0);
-	}
-
-	private WritableImage cutIntersection(WritableImage image, int startX) {
-		return new WritableImage(image.getPixelReader(),
-				startX,
-				0,
-				WIDTH-CAMERA_OFFSET,
-				HEIGHT);
+		mixer.refresh(anaglyph);
 	}
 }
