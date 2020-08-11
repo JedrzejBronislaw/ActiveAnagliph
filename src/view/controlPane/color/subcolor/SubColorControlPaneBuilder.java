@@ -14,11 +14,13 @@ public class SubColorControlPaneBuilder extends FXMLBuilder<SubColorControlPaneC
 
 	@NonNull private String name;
 	@Setter private Consumer<Double> onChangeValue;
+	@Setter private double value;
 	
 	
 	@Override
 	protected void afterBuild() {
 		controller.setName(name);
+		controller.setValue(value);
 		controller.setOnChangeValue(onChangeValue);
 	}
 }

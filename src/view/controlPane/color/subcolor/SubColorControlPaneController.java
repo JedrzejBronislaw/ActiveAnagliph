@@ -25,6 +25,10 @@ public class SubColorControlPaneController implements Initializable {
 	public void setName(String name) {
 		nameLabel.setText(name);
 	}
+
+	public void setValue(double value) {
+		slider.setValue(value);
+	}
 	
 	public double get() {
 		return slider.getValue();

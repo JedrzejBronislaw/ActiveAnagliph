@@ -23,13 +23,14 @@ public class ColorControlPaneBuilder extends FXMLBuilder<ColorControlPaneControl
 
 	@Override
 	protected void afterBuild() {
-		controller.add(subcolorControl("Red",   v -> red   = v));
-		controller.add(subcolorControl("Green", v -> green = v));
-		controller.add(subcolorControl("Blue",  v -> blue  = v));
+		controller.add(subcolorControl("Red",   red,   v -> red   = v));
+		controller.add(subcolorControl("Green", green, v -> green = v));
+		controller.add(subcolorControl("Blue",  blue,  v -> blue  = v));
 	}
 
-	private Node subcolorControl(String name, Consumer<Double> saveValue) {
+	private Node subcolorControl(String name, double initValue, Consumer<Double> saveValue) {
 		SubColorControlPaneBuilder builder = new SubColorControlPaneBuilder(name);
+		builder.setValue(initValue);
 		builder.setOnChangeValue(value -> {
 			saveValue.accept(value);
 			changeValueEvent();
@@ -43,5 +44,11 @@ public class ColorControlPaneBuilder extends FXMLBuilder<ColorControlPaneControl
 	private void changeValueEvent() {
 		if (onChangeValue != null)
 			onChangeValue.change(red, green, blue);
+	}
+
+	public void setInitialValue(double red, double green, double blue) {
+		this.red   = red;
+		this.green = green;
+		this.blue  = blue;
 	}
 }
