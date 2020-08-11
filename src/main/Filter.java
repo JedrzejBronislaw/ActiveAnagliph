@@ -57,4 +57,16 @@ public class Filter {
 		this.b = b;
 		ciB.setPaint(Color.color(0, 0, b));
 	}
+	
+	public void setWidth(double width) {
+		ciR.setWidth(width);
+		ciG.setWidth(width);
+		ciB.setWidth(width);
+	}
+	
+	public void setHeight(double height) {
+		ciR.setHeight(height);
+		ciG.setHeight(height);
+		ciB.setHeight(height);
+	}
 } 

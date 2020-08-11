@@ -50,4 +50,16 @@ public class AnaglyphViewer {
 	public void refreshAnaglyph() {
 		mixer.refresh(anaglyph);
 	}
+	
+	public void setWidth(double width) {
+		rightView.setViewWidth(width);
+		leftView .setViewWidth(width);
+		mixer.refresh(anaglyph);
+	}
+	
+	public void setHeight(double height) {
+		rightView.setViewHeight(height);
+		leftView .setViewHeight(height);
+		mixer.refresh(anaglyph);
+	}
 }

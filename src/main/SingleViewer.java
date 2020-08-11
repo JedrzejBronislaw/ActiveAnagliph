@@ -45,4 +45,14 @@ public class SingleViewer extends SubScene {
 		filter.setG(g);
 		filter.setB(b);
 	}
+	
+	public void setViewWidth(double width) {
+		setWidth(width);
+		filter.setWidth(width);
+	}
+	
+	public void setViewHeight(double height) {
+		setHeight(height);
+		filter.setHeight(height);
+	}
 }
