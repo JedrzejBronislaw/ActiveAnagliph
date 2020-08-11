@@ -19,8 +19,6 @@ public class MainWindowBuilder extends FXMLBuilder<MainWindowController> {
 	@Override
 	protected void afterBuild() {
 		controller.setCenter(anaglyphViewer.getAnaglyph());
-		controller.setRight (anaglyphViewer.getRightView());
-		controller.setLeft  (anaglyphViewer.getLeftView());
 		controller.setBottom(controlPane);
 	}
 }

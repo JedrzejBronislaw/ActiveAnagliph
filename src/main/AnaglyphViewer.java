@@ -1,12 +1,14 @@
 package main;
 
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.HBox;
 import lombok.Getter;
 
 public class AnaglyphViewer {
@@ -32,6 +34,8 @@ public class AnaglyphViewer {
 		mouseController.addView(fumeHoodR, rightView.getCamera());
 		mouseController.addView(fumeHoodL, leftView .getCamera());
 		mouseController.addController(anaglyph);
+		
+		new Scene(new HBox(rightView, leftView));
 	}
 	
 	public void setRightFilter(double r, double g, double b) {
