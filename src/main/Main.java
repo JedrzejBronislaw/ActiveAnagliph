@@ -40,6 +40,7 @@ public class Main extends Application {
 		ControlPaneBuilder builder = new ControlPaneBuilder();
 		builder.setOnChangeLeftValue (anaglyphViewer::setLeftFilter);
 		builder.setOnChangeRightValue(anaglyphViewer::setRightFilter);
+		builder.setSetOffset(anaglyphViewer::setOffset);
 		builder.build();
 		
 		return builder.getNode();

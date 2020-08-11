@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox spacing="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="view.controlPane.offset.OffsetControlPaneController">
+   <children>
+      <CheckBox fx:id="offsetOn" mnemonicParsing="false" text="Offset" />
+      <Slider fx:id="offsetValue" />
+   </children>
+</VBox>
