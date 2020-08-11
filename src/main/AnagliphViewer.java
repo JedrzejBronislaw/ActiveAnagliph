@@ -29,8 +29,9 @@ public class AnagliphViewer {
 		rightView.setCyanFilter();
 		leftView.setRedFilter();
 		
-		mouseController.add(fumeHoodR, rightView.getCamera());
-		mouseController.add(fumeHoodL, leftView .getCamera());
+		mouseController.addView(fumeHoodR, rightView.getCamera());
+		mouseController.addView(fumeHoodL, leftView .getCamera());
+		mouseController.addController(anagliph);
 	}
 	
 	public void setRightFilter(double r, double g, double b) {

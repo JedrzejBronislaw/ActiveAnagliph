@@ -105,13 +105,14 @@ public class MouseController {
 		refreshEvent.refreshing();
 	}
 	
-	public void add(Node node, Camera camera) {
+	public void addView(Node node, Camera camera) {
 		views.add(new View(camera));
-		
+		node.getTransforms().addAll(rotateX, rotateY);
+	}
+	
+	public void addController(Node node) {
 		node.setOnMousePressed(this::mousePressed);
 		node.setOnMouseDragged(this::mouseDragged);
 		node.setOnScroll(      this::scroll);
-		
-		node.getTransforms().addAll(rotateX, rotateY);
 	}
 }
