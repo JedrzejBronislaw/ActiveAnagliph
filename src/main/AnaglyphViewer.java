@@ -9,18 +9,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import lombok.Getter;
 
-public class AnagliphViewer {
+public class AnaglyphViewer {
 	
 	private final static double CAMERA_OFFSET = 20;
 	
 	@Getter private final SingleViewer rightView;
 	@Getter private final SingleViewer leftView;
-	@Getter private final ImageView anagliph = new ImageView();
+	@Getter private final ImageView anaglyph = new ImageView();
 	
 	private final MouseController mouseController = new MouseController(this::refreshAnaglyph);
 
 
-	public AnagliphViewer(Group fumeHoodL, Group fumeHoodR) {
+	public AnaglyphViewer(Group fumeHoodL, Group fumeHoodR) {
 		rightView = new SingleViewer(fumeHoodR, 500, 500);
 		leftView  = new SingleViewer(fumeHoodL, 500, 500);
 		
@@ -31,7 +31,7 @@ public class AnagliphViewer {
 		
 		mouseController.addView(fumeHoodR, rightView.getCamera());
 		mouseController.addView(fumeHoodL, leftView .getCamera());
-		mouseController.addController(anagliph);
+		mouseController.addController(anaglyph);
 	}
 	
 	public void setRightFilter(double r, double g, double b) {
@@ -48,12 +48,12 @@ public class AnagliphViewer {
 		WritableImage left  = leftView .snapshot(new SnapshotParameters(), null);
 		WritableImage right = rightView.snapshot(new SnapshotParameters(), null);
 		
-		anagliph.setImage(left);
+		anaglyph.setImage(left);
 		
 		Blend blend = new Blend(BlendMode.ADD);
 		ImageInput imageInput = new ImageInput(right, CAMERA_OFFSET, 0);
 		blend.setTopInput(imageInput);
 		
-		anagliph.setEffect(blend);
+		anaglyph.setEffect(blend);
 	}
 }

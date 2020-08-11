@@ -19,34 +19,34 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		AnagliphViewer anagliphViewer = anagliphViewer();
-		Parent mainWindow = mainWindow(anagliphViewer, controls(anagliphViewer));
+		AnaglyphViewer anaglyphViewer = anaglyphViewer();
+		Parent mainWindow = mainWindow(anaglyphViewer, controls(anaglyphViewer));
 		
 		Scene scene = new Scene (mainWindow, 1000, 600, true, SceneAntialiasing.BALANCED);
 		stage.setScene(scene);
 		stage.show();
 		
-		anagliphViewer.refreshAnaglyph();
+		anaglyphViewer.refreshAnaglyph();
 	}
 
-	private AnagliphViewer anagliphViewer() {
+	private AnaglyphViewer anaglyphViewer() {
 		Group fumeHoodL = new FumeHood(2000, 1300, 600);
 		Group fumeHoodR = new FumeHood(2000, 1300, 600);
 		
-		return new AnagliphViewer(fumeHoodL, fumeHoodR);
+		return new AnaglyphViewer(fumeHoodL, fumeHoodR);
 	}
 
-	private Node controls(AnagliphViewer anagliphViewer) {
+	private Node controls(AnaglyphViewer anaglyphViewer) {
 		ControlPaneBuilder builder = new ControlPaneBuilder();
-		builder.setOnChangeLeftValue (anagliphViewer::setLeftFilter);
-		builder.setOnChangeRightValue(anagliphViewer::setRightFilter);
+		builder.setOnChangeLeftValue (anaglyphViewer::setLeftFilter);
+		builder.setOnChangeRightValue(anaglyphViewer::setRightFilter);
 		builder.build();
 		
 		return builder.getNode();
 	}
 
-	private Parent mainWindow(AnagliphViewer anagliphViewer, Node controls) {
-		MainWindowBuilder builder = new MainWindowBuilder(anagliphViewer, controls);
+	private Parent mainWindow(AnaglyphViewer anaglyphViewer, Node controls) {
+		MainWindowBuilder builder = new MainWindowBuilder(anaglyphViewer, controls);
 		builder.build();
 		
 		return (Parent) builder.getNode();
