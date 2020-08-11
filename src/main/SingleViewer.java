@@ -55,4 +55,8 @@ public class SingleViewer extends SubScene {
 		setHeight(height);
 		filter.setHeight(height);
 	}
+
+	public void setXCamera(double x) {
+		getCamera().setTranslateX(x);
+	}
 }

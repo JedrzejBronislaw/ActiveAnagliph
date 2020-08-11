@@ -6,16 +6,17 @@ import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AnaglyphMixer {
 
 	@NonNull private final SingleViewer rightView;
 	@NonNull private final SingleViewer leftView;
 	
-	         private final int offset;
+	@Setter private int offset;
 	
 	
 	public void refresh(ImageView anaglyph) {
