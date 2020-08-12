@@ -64,9 +64,14 @@ public class AnaglyphViewer {
 	}
 	
 	public void setOffset(double offset) {
-		double leftX = leftView.getCamera().getTranslateX();
-		rightView.setXCamera(leftX + offset);
-		mixer.setOffset((int) offset);
+		double leftX   = leftView.getCamera().getTranslateX();
+		double rightX  = leftView.getCamera().getTranslateX();
+		double centerX = (rightX-leftX)/2;
+		double halfOffset = offset/2;
+		
+		leftView .setXCamera(centerX - halfOffset);
+		rightView.setXCamera(centerX + halfOffset);
+		mixer.setOffset((int) halfOffset);
 		
 		mixer.refresh(anaglyph);
 	}
