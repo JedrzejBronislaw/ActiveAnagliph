@@ -21,14 +21,22 @@ public class OffsetControlPaneController implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		offsetOn.selectedProperty().addListener(v -> setOffset());
-		offsetValue.valueProperty().addListener(v -> setOffset());
+		offsetOn.selectedProperty().addListener(v -> changeOffsetEvent());
+		offsetValue.valueProperty().addListener(v -> changeOffsetEvent());
 	}
 	
-	private void setOffset() {
+	void changeOffsetEvent() {
 		boolean on = offsetOn.isSelected();
 		double offset = on ? offsetValue.getValue() : 0;
 		
 		Injection.run(onChangeValue, offset);
+	}
+	
+	void setOffset(boolean on) {
+		offsetOn.setSelected(on);
+	}
+	
+	void setOffset(double offset) {
+		offsetValue.setValue(offset);
 	}
 }

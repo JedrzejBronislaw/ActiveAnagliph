@@ -12,6 +12,8 @@ import view.controlPane.offset.OffsetControlPaneBuilder;
 
 @RequiredArgsConstructor
 public class ControlPaneBuilder extends FXMLBuilder<ControlPaneController> {
+	private final static double INIT_OFFSET = 20;
+	
 	@Getter private final String fxmlFileName = "ControlPane.fxml";
 
 	@Setter private OnChangeValue onChangeLeftValue;
@@ -38,7 +40,7 @@ public class ControlPaneBuilder extends FXMLBuilder<ControlPaneController> {
 	}
 
 	private Node offsetControler(Consumer<Double> onChangeValue) {
-		OffsetControlPaneBuilder builder = new OffsetControlPaneBuilder();
+		OffsetControlPaneBuilder builder = new OffsetControlPaneBuilder(true, INIT_OFFSET);
 		builder.setOnChangeValue(onChangeValue);
 		builder.build();
 		
