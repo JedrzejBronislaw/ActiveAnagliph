@@ -1,6 +1,5 @@
 package jedrzejbronislaw.anaglyph.active.viewer;
 
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -20,9 +19,12 @@ public class AnaglyphViewer {
 	private final MouseController mouseController = new MouseController(this::refreshAnaglyph);
 
 
-	public AnaglyphViewer(Group fumeHoodL, Group fumeHoodR) {
-		rightView = new SingleViewer(fumeHoodR, WIDTH, HEIGHT);
-		leftView  = new SingleViewer(fumeHoodL, WIDTH, HEIGHT);
+	public AnaglyphViewer(AnaglyphObject anaglyphObject) {
+		AnaglyphObject objectL = anaglyphObject;
+		AnaglyphObject objectR = anaglyphObject.copy();
+		
+		rightView = new SingleViewer(objectR, WIDTH, HEIGHT);
+		leftView  = new SingleViewer(objectL, WIDTH, HEIGHT);
 		mixer     = new AnaglyphMixer(rightView, leftView, CAMERA_OFFSET);
 		
 		rightView.setCameraOffset(CAMERA_OFFSET);
@@ -30,8 +32,8 @@ public class AnaglyphViewer {
 		rightView.setCyanFilter();
 		leftView.setRedFilter();
 		
-		mouseController.addView(fumeHoodR, rightView.getCamera());
-		mouseController.addView(fumeHoodL, leftView .getCamera());
+		mouseController.addView(objectR, rightView.getCamera());
+		mouseController.addView(objectL, leftView .getCamera());
 		mouseController.addController(anaglyph);
 		
 		new Scene(new HBox(rightView, leftView));

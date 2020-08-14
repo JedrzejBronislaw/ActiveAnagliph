@@ -1,12 +1,12 @@
 package jedrzejbronislaw.anaglyph.active.view;
 
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.stage.Stage;
 import jedrzejbronislaw.anaglyph.active.furnitures.fumehood.FumeHood;
+import jedrzejbronislaw.anaglyph.active.furnitures.fumehood.FumeHoodParameters;
 import jedrzejbronislaw.anaglyph.active.view.controlPane.ControlPaneBuilder;
 import jedrzejbronislaw.anaglyph.active.view.mainWindow.MainWindowBuilder;
 import jedrzejbronislaw.anaglyph.active.viewer.AnaglyphViewer;
@@ -26,10 +26,13 @@ public class ViewBuilder {
 	}
 
 	private AnaglyphViewer anaglyphViewer() {
-		Group fumeHoodL = new FumeHood(2000, 1300, 600);
-		Group fumeHoodR = new FumeHood(2000, 1300, 600);
+		FumeHoodParameters params = FumeHoodParameters.builder()
+				.width (2000)
+				.height(1300)
+				.depth  (600)
+				.build();
 		
-		return new AnaglyphViewer(fumeHoodL, fumeHoodR);
+		return new AnaglyphViewer(new FumeHood(params));
 	}
 
 	private Node controls(AnaglyphViewer anaglyphViewer) {

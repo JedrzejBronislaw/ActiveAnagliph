@@ -1,6 +1,5 @@
 package jedrzejbronislaw.anaglyph.active.viewer;
 
-import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
@@ -9,8 +8,8 @@ public class SingleViewer extends SubScene {
 
 	private Filter filter;
 
-	public SingleViewer(Parent furniture, double width, double height) {
-		super(furniture, width, height, true, SceneAntialiasing.BALANCED);
+	public SingleViewer(AnaglyphObject object, double width, double height) {
+		super(object, width, height, true, SceneAntialiasing.BALANCED);
 
 		filter = new Filter(width, height);
 		setEffect(filter.getFilter());

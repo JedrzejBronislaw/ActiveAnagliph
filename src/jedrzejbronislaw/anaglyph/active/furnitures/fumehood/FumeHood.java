@@ -1,12 +1,12 @@
 package jedrzejbronislaw.anaglyph.active.furnitures.fumehood;
 
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import jedrzejbronislaw.anaglyph.active.furnitures.Chipboard;
 import jedrzejbronislaw.anaglyph.active.furnitures.ChipboardFactory;
 import jedrzejbronislaw.anaglyph.active.furnitures.Position;
+import jedrzejbronislaw.anaglyph.active.viewer.AnaglyphObject;
 
-public class FumeHood extends Group {
+public class FumeHood extends AnaglyphObject {
 
 	private static final int MAIN_CHIPBOARD_THICK = 25;
 	private static final int MASK_CHIPBOARD_THICK = 18;
@@ -18,8 +18,14 @@ public class FumeHood extends Group {
 	private static final int WINDOW_SPACE = 50;
 	private static final Color COLOR = Color.LIGHTGRAY;
 	
+	private FumeHoodParameters paramesters;
 	
-	public FumeHood(int width, int height, int depth) {
+	
+	public FumeHood(FumeHoodParameters paramesters) {
+		this.paramesters = paramesters;
+		int width  = paramesters.getWidth();
+		int height = paramesters.getHeight();
+		int depth  = paramesters.getDepth();
 
 		ChipboardFactory chipboardFactory = new ChipboardFactory(MAIN_CHIPBOARD_THICK, COLOR);
 		ChipboardFactory maskFactory      = new ChipboardFactory(MASK_CHIPBOARD_THICK, COLOR);
@@ -65,11 +71,17 @@ public class FumeHood extends Group {
 		window.translateZProperty().bind(front.front().subtract(WINDOW_SPACE/2));
 
 		
-		getChildren().addAll(side1, side2, back, frontMask, batten1, batten2, window, front);
+		addElements(side1, side2, back, frontMask, batten1, batten2, window, front);
 		side1.setTranslateX(side1.getTranslateX()-width/2d);
 		
 		setScaleX(0.1);
 		setScaleY(0.1);
 		setScaleZ(0.1);
+	}
+
+
+	@Override
+	public FumeHood copy() {
+		return new FumeHood(paramesters);
 	}
 }
