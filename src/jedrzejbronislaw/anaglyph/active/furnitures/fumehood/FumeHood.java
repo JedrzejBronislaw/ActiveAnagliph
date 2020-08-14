@@ -72,11 +72,9 @@ public class FumeHood extends AnaglyphObject {
 
 		
 		addElements(side1, side2, back, frontMask, batten1, batten2, window, front);
-		side1.setTranslateX(side1.getTranslateX()-width/2d);
+		side1.moveLeft(width/2d);
 		
-		setScaleX(0.1);
-		setScaleY(0.1);
-		setScaleZ(0.1);
+		setScale(0.1);
 	}
 
 

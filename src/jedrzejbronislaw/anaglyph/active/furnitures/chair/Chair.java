@@ -43,11 +43,9 @@ public class Chair extends AnaglyphObject {
 		
 		
 		addElements(back, left, right, seat);
-		back.setTranslateZ(back.getTranslateX()+250);
+		back.moveBack(250);
 		
-		setScaleX(0.1);
-		setScaleY(0.1);
-		setScaleZ(0.1);
+		setScale(0.1);
 	}
 	
 	@Override
