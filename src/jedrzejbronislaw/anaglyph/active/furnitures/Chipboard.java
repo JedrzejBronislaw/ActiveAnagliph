@@ -51,6 +51,32 @@ public class Chipboard extends Box {
 		return getTranslateZ();
 	}
 	
+
+	public void moveLeft(double value) {
+		setTranslateX(getTranslateX() - value);
+	}
+	
+	public void moveRight(double value) {
+		setTranslateX(getTranslateX() + value);
+	}
+
+	public void moveUp(double value) {
+		setTranslateY(getTranslateY() - value);
+	}
+
+	public void moveDown(double value) {
+		setTranslateY(getTranslateY() + value);
+	}
+
+	public void moveBack(double value) {
+		setTranslateZ(getTranslateZ() + value);
+	}
+
+	public void moveFront(double value) {
+		setTranslateZ(getTranslateZ() - value);
+	}
+	
+	
 	public void setPosition(Position position) {
 		Rotate rotate;
 		this.position = position;

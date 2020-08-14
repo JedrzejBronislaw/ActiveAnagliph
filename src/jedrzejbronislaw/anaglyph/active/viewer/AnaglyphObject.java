@@ -14,4 +14,10 @@ public abstract class AnaglyphObject extends Group {
 	protected void addElements(Node... elements) {
 		getChildren().addAll(elements);
 	}
+	
+	protected void setScale(double scale) {
+		setScaleX(scale);
+		setScaleY(scale);
+		setScaleZ(scale);
+	}
 }
