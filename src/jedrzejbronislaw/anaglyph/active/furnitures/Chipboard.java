@@ -7,8 +7,33 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.transform.Rotate;
+import lombok.RequiredArgsConstructor;
 
 public class Chipboard extends Box {
+	
+	@RequiredArgsConstructor
+	public class CoordinateX {
+		private final DoubleBinding binding;
+		
+		public DoubleBinding right(double value) {return binding.add(value);}
+		public DoubleBinding left (double value) {return binding.subtract(value);}
+	}
+	
+	@RequiredArgsConstructor
+	public class CoordinateY {
+		private final DoubleBinding binding;
+		
+		public DoubleBinding down(double value) {return binding.add(value);}
+		public DoubleBinding up  (double value) {return binding.subtract(value);}
+	}
+	
+	@RequiredArgsConstructor
+	public class CoordinateZ {
+		private final DoubleBinding binding;
+
+		public DoubleBinding back (double value) {return binding.add(value);}
+		public DoubleBinding front(double value) {return binding.subtract(value);}
+	}
 	
 	private DoubleBinding halfWidth  = widthProperty() .divide(2);
 	private DoubleBinding halfDepth  = depthProperty() .divide(2);
@@ -285,7 +310,33 @@ public class Chipboard extends Box {
 			default:   return innerBottom();
 		}
 	}
-
+	
+	
+	public CoordinateZ frontCoord() {
+		return new CoordinateZ(front());
+	}
+	
+	public CoordinateZ backCoord() {
+		return new CoordinateZ(back());
+	}
+	
+	public CoordinateX leftCoord() {
+		return new CoordinateX(left());
+	}
+	
+	public CoordinateX rightCoord() {
+		return new CoordinateX(right());
+	}
+	
+	public CoordinateY topCoord() {
+		return new CoordinateY(top());
+	}
+	
+	public CoordinateY bottomCoord() {
+		return new CoordinateY(bottom());
+	}
+	
+	
 	public void touchTop(Chipboard chipboard) {
 		bindTop(chipboard.bottom());
 	}

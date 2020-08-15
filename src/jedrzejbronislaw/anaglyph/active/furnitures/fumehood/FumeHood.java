@@ -45,7 +45,7 @@ public class FumeHood extends AnaglyphObject {
 		
 		back.touchLeft(side1);
 		back.bindBottom(side1);
-		back.bindBack(side1.back().subtract(BACK_OFFSET));
+		back.bindBack(side1.backCoord().front(BACK_OFFSET));
 		
 		side2.bindFront(side1);
 		side2.bindBottom(side1);
@@ -55,9 +55,9 @@ public class FumeHood extends AnaglyphObject {
 		frontMask.bindTop(side1);
 		frontMask.bindFront(side1);
 
-		front.bindTop(side1.top().add(FRONT_LOWERING));
+		front.bindTop(side1.topCoord().down(FRONT_LOWERING));
 		front.touchLeft(side1);
-		front.bindFront(frontMask.back().add(WINDOW_SPACE));
+		front.bindFront(frontMask.backCoord().back(WINDOW_SPACE));
 		
 		batten1.bindTop(side1);
 		batten1.bindLeft(side1);
@@ -67,8 +67,8 @@ public class FumeHood extends AnaglyphObject {
 		batten2.bindRight(side2);
 		batten2.touchBack(side2);
 
-		window.translateXProperty().bind(side1.left().add(width/2d));
-		window.translateZProperty().bind(front.front().subtract(WINDOW_SPACE/2));
+		window.translateXProperty().bind(side1.leftCoord().right(width/2d));
+		window.translateZProperty().bind(front.frontCoord().front(WINDOW_SPACE/2));
 
 		
 		addElements(side1, side2, back, frontMask, batten1, batten2, window, front);

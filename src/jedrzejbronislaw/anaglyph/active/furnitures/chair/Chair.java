@@ -31,11 +31,11 @@ public class Chair extends AnaglyphObject {
 		
 		left .bindLeft(back);
 		right.bindRight(back);
-		seat .bindLeft(back.left().add(CHIPBOARD_THICK));
+		seat .bindLeft(back.leftCoord().right(CHIPBOARD_THICK));
 		
 		left .bindBottom(back);
 		right.bindBottom(back);
-		seat .bindBottom(back.bottom().subtract(SEAT_HEIGHT-CHIPBOARD_THICK));
+		seat .bindBottom(back.bottomCoord().up(SEAT_HEIGHT-CHIPBOARD_THICK));
 		
 		left .touchBack(back);
 		right.touchBack(back);
