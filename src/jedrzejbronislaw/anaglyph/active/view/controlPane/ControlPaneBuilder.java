@@ -6,6 +6,8 @@ import javafx.scene.Node;
 import jedrzejbronislaw.anaglyph.active.view.builders.FXMLBuilder;
 import jedrzejbronislaw.anaglyph.active.view.controlPane.color.ColorControlPaneBuilder;
 import jedrzejbronislaw.anaglyph.active.view.controlPane.offset.OffsetControlPaneBuilder;
+import jedrzejbronislaw.anaglyph.active.view.modelList.ModelListBuilder;
+import jedrzejbronislaw.anaglyph.active.viewer.AnaglyphObject;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -19,6 +21,8 @@ public class ControlPaneBuilder extends FXMLBuilder<ControlPaneController> {
 	@Setter private OnChangeValue onChangeLeftValue;
 	@Setter private OnChangeValue onChangeRightValue;
 	@Setter private Consumer<Double> setOffset;
+
+	@Setter private Consumer<AnaglyphObject> onModelSelect;
 	
 	
 	@Override
@@ -27,6 +31,8 @@ public class ControlPaneBuilder extends FXMLBuilder<ControlPaneController> {
 		controller.add(colorControler(onChangeRightValue, 0, 1, 1));
 
 		controller.add(offsetControler(setOffset));
+
+		controller.add(modelList());
 	}
 
 
@@ -42,6 +48,15 @@ public class ControlPaneBuilder extends FXMLBuilder<ControlPaneController> {
 	private Node offsetControler(Consumer<Double> onChangeValue) {
 		OffsetControlPaneBuilder builder = new OffsetControlPaneBuilder(true, INIT_OFFSET);
 		builder.setOnChangeValue(onChangeValue);
+		builder.build();
+		
+		return builder.getNode();
+	}
+
+
+	private Node modelList() {
+		ModelListBuilder builder = new ModelListBuilder();
+		builder.setOnClick(onModelSelect);
 		builder.build();
 		
 		return builder.getNode();
