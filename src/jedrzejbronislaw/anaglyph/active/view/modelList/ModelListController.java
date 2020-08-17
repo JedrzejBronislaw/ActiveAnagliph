@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import jedrzejbronislaw.anaglyph.active.furnitures.chair.Chair;
 import jedrzejbronislaw.anaglyph.active.furnitures.fumehood.FumeHood;
 import jedrzejbronislaw.anaglyph.active.furnitures.fumehood.FumeHoodParameters;
+import jedrzejbronislaw.anaglyph.active.furnitures.room.Room;
 import jedrzejbronislaw.anaglyph.active.tools.Injection;
 import jedrzejbronislaw.anaglyph.active.viewer.AnaglyphObject;
 import lombok.Getter;
@@ -46,9 +47,11 @@ public class ModelListController implements Initializable {
 		
 		ModelItem mi1 = new ModelItem("Fume hood", () -> new FumeHood(params));
 		ModelItem mi2 = new ModelItem("Chair",     () -> new Chair());
+		ModelItem mi3 = new ModelItem("Room",      () -> new Room());
 		
 		list.getItems().add(mi1);
 		list.getItems().add(mi2);
+		list.getItems().add(mi3);
 		
 		list.setOnMouseClicked(e -> Injection.run(onClick, selectedModel()));
 	}
