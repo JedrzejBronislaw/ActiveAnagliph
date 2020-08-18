@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import jedrzejbronislaw.anaglyph.active.furnitures.Chipboard;
 import jedrzejbronislaw.anaglyph.active.furnitures.ChipboardFactory;
 import jedrzejbronislaw.anaglyph.active.furnitures.Position;
+import jedrzejbronislaw.anaglyph.active.furnitures.chair.Chair;
 import jedrzejbronislaw.anaglyph.active.viewer.AnaglyphObject;
 
 public class Room extends AnaglyphObject {
@@ -22,6 +23,7 @@ public class Room extends AnaglyphObject {
 		Chipboard left  = chipboardFactory.create(DEPTH - CHIPBOARD_THICK, HEIGHT);
 		Chipboard right = chipboardFactory.create(DEPTH - CHIPBOARD_THICK, HEIGHT);
 		Chipboard floor = chipboardFactory.create(WIDTH, DEPTH);
+		Chair chair = new Chair();
 		
 		left .setPosition(Position.SIDE);
 		right.setPosition(Position.SIDE);
@@ -41,8 +43,15 @@ public class Room extends AnaglyphObject {
 		left.touchBack(back);
 		right.touchBack(back);
 		
+		chair.translateZProperty().bind(back.frontCoord().front(100 + 500/2));
+		chair.translateYProperty().bind(floor.topCoord().up(1000/2));
+		chair.translateXProperty().bind(left.rightCoord().right(100 + 500/2));
+		chair.setScaleX(1);
+		chair.setScaleY(1);
+		chair.setScaleZ(1);
 		
-		addElements(back, left, right, floor);
+		
+		addElements(back, left, right, floor, chair);
 		floor.moveDown(1500);
 		floor.moveBack(1000);
 		
